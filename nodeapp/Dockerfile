@@ -1,8 +1,11 @@
-FROM node:20-alpine3.17
+FROM node:16.17.0-bullseye-slim
 
 ARG SOME_ARG=world
 
 RUN echo Hello ${SOME_ARG}
+
+# needed to be able to gracefully stop node process on CTRL+C
+RUN apt-get update && apt-get install -y --no-install-recommends dumb-init
 
 WORKDIR /app
 
@@ -12,4 +15,5 @@ RUN npm install
 
 ENV APP_NAME="Best app ever"
 
-ENTRYPOINT [ "node", "index.js" ]
+# needed to be able to gracefully stop node process on CTRL+C
+ENTRYPOINT [ "dumb-init", "node", "index.js" ]
