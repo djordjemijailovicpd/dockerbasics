@@ -1,1 +1,5 @@
 nodeapp/node_modules
+multistage/node_modules
+multistage/dist
+.vscode
+.angular
